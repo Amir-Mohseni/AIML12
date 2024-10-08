@@ -31,8 +31,6 @@ public class AgentSoccer : Agent
     float m_KickPower;
     // The coefficient for the reward for colliding with a ball. Set using curriculum.
     float m_BallTouch;
-    int m_episodes_without_ball = 0;
-    bool sawBallThisEpisode = false;
     public Position position;
 
     const float k_Power = 500f;
@@ -218,14 +216,6 @@ public class AgentSoccer : Agent
     public override void OnEpisodeBegin()
     {
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
-        sawBallThisEpisode = false;
     }
-    public override void CollectObservations(VectorSensor sensor)
-    {
-
-    }
-
-
-
 
 }
