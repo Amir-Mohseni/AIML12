@@ -1,0 +1,18 @@
+behaviors:
+  YourAgentBehaviorName:   # Replace with the behavior name in your Unity project
+    trainer_type: poca
+    hyperparameters:
+      batch_size: 1024
+      buffer_size: 10240
+      learning_rate: 0.0003
+      num_epoch: 3
+    network_settings:
+      hidden_units: 128
+      num_layers: 2
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    max_steps: 500000
+    time_horizon: 64
+    summary_freq: 10000

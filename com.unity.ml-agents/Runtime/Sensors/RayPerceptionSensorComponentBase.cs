@@ -57,7 +57,7 @@ namespace Unity.MLAgents.Sensors
         [Range(0, 180)]
         [Tooltip("Cone size for rays. Using 90 degrees will cast rays to the left and right. " +
             "Greater than 90 degrees will go backwards.")]
-        float m_MaxRayDegrees = 70;
+        float m_MaxRayDegrees = 10;
 
         /// <summary>
         /// Cone size for rays. Using 90 degrees will cast rays to the left and right.

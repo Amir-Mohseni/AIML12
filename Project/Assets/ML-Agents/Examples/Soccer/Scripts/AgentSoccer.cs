@@ -31,9 +31,11 @@ public class AgentSoccer : Agent
     float m_KickPower;
     // The coefficient for the reward for colliding with a ball. Set using curriculum.
     float m_BallTouch;
+    int m_episodes_without_ball = 0;
+    bool sawBallThisEpisode = false;
     public Position position;
 
-    const float k_Power = 2000f;
+    const float k_Power = 500f;
     float m_Existential;
     float m_LateralSpeed;
     float m_ForwardSpeed;
@@ -100,7 +102,7 @@ public class AgentSoccer : Agent
         var dirToGo = Vector3.zero;
         var rotateDir = Vector3.zero;
 
-        m_KickPower = 0f;
+        m_KickPower = 10f;
 
         var forwardAxis = act[0];
         var rightAxis = act[1];
@@ -207,11 +209,23 @@ public class AgentSoccer : Agent
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
         }
+        if (c.gameObject.CompareTag("wall"))
+        {
+            AddReward(-0.1f);
+        }
     }
 
     public override void OnEpisodeBegin()
     {
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
+        sawBallThisEpisode = false;
     }
+    public override void CollectObservations(VectorSensor sensor)
+    {
+
+    }
+
+
+
 
 }

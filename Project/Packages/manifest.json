@@ -4,7 +4,7 @@
     "com.unity.formats.fbx": "4.2.1",
     "com.unity.ide.rider": "3.0.24",
     "com.unity.inputsystem": "1.6.1",
-    "com.unity.ml-agents": "file:../../com.unity.ml-agents",
+    "com.unity.ml-agents": "file:C:/Users/ronad/Documents/project2S1/AIML12/com.unity.ml-agents",
     "com.unity.ml-agents.extensions": "file:../../com.unity.ml-agents.extensions",
     "com.unity.nuget.newtonsoft-json": "3.2.1",
     "com.unity.recorder": "4.0.1",

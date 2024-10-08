@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1728389917",
+        "python_version": "3.10.0 (tags/v3.10.0:b494f59, Oct  4 2021, 19:00:18) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\Project\\venv\\Scripts\\mlagents-learn configure_tests/config.yaml --run-id=TestT6 --train",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.4.1+cpu",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1728389957"
+    },
+    "total": 40.084101799999985,
+    "count": 1,
+    "self": 0.004595199999926081,
+    "children": {
+        "run_training.setup": {
+            "total": 0.15214060000005247,
+            "count": 1,
+            "self": 0.15214060000005247
+        },
+        "TrainerController.start_learning": {
+            "total": 39.927366000000006,
+            "count": 1,
+            "self": 7.579999999052234e-05,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 39.92727119999995,
+                    "count": 1,
+                    "self": 39.92727119999995
+                },
+                "TrainerController._save_models": {
+                    "total": 1.900000006571645e-05,
+                    "count": 1,
+                    "self": 1.900000006571645e-05
+                }
+            }
+        }
+    }
+}

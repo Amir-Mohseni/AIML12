@@ -44,10 +44,10 @@ namespace Unity.MLAgents.Editor
             }
             EditorGUI.EndDisabledGroup();
 
-            EditorGUILayout.PropertyField(so.FindProperty("m_MaxRayDegrees"), true);
-            EditorGUILayout.PropertyField(so.FindProperty("m_SphereCastRadius"), true);
-            EditorGUILayout.PropertyField(so.FindProperty("m_RayLength"), true);
-            EditorGUILayout.PropertyField(so.FindProperty("m_RayLayerMask"), true);
+            EditorGUILayout.PropertyField(so.FindProperty("m_MaxRayDegrees"), false);
+            EditorGUILayout.PropertyField(so.FindProperty("m_SphereCastRadius"), false);
+            EditorGUILayout.PropertyField(so.FindProperty("m_RayLength"), false);
+            EditorGUILayout.PropertyField(so.FindProperty("m_RayLayerMask"), false);
 
             // Because the number of observation stacks affects the observation shape,
             // it is not editable during play mode.
