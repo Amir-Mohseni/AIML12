@@ -207,6 +207,10 @@ public class AgentSoccer : Agent
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
         }
+        if (c.gameObject.CompareTag("wall"))
+        {
+            AddReward(-0.1f);
+        }
     }
 
     public override void OnEpisodeBegin()
