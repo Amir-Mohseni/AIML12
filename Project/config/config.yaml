@@ -1,5 +1,5 @@
 behaviors:
-  YourAgentBehaviorName:   # Replace with the behavior name in your Unity project
+  SoccerTwos:
     trainer_type: poca
     hyperparameters:
       batch_size: 1024
