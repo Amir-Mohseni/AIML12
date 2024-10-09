@@ -77,7 +77,7 @@ public class AgentSoccer : Agent
         {
             m_LateralSpeed = 5.0f;
             m_ForwardSpeed = 5.0f;
-            //MARK: Original values
+            //MARK: Original values here
             // m_LateralSpeed = 1.0f;
             // m_ForwardSpeed = 1.0f;
         }
