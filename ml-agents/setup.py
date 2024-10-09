@@ -60,7 +60,13 @@ setup(
         f"mlagents_envs=={VERSION}",
         "numpy>=1.23.5,<1.24.0",
         "Pillow>=4.2.1",
+<<<<<<< Updated upstream
         "protobuf>=3.6,<3.21",
+=======
+        #"protobuf>=3.6,<3.20",
+        "protobuf>=3.6,<=3.20.2", #new adjusted one
+        
+>>>>>>> Stashed changes
         "pyyaml>=3.1.0",
         "torch>=2.1.1",
         "tensorboard>=2.14",
@@ -72,7 +78,12 @@ setup(
         "attrs>=19.3.0",
         "huggingface_hub>=0.14",
         'pypiwin32==223;platform_system=="Windows"',
+<<<<<<< Updated upstream
         "onnx==1.15.0",
+=======
+        #"onnx==1.12.0",
+        "onnx==1.13.0", #new adjusted one
+>>>>>>> Stashed changes
     ],
     python_requires=">=3.10.1,<=3.10.12",
     entry_points={

@@ -75,18 +75,27 @@ public class AgentSoccer : Agent
         }
         if (position == Position.Goalie)
         {
-            m_LateralSpeed = 1.0f;
-            m_ForwardSpeed = 1.0f;
+            m_LateralSpeed = 5.0f;
+            m_ForwardSpeed = 5.0f;
+            //MARK: Original values
+            // m_LateralSpeed = 1.0f;
+            // m_ForwardSpeed = 1.0f;
         }
         else if (position == Position.Striker)
         {
-            m_LateralSpeed = 0.3f;
-            m_ForwardSpeed = 1.3f;
+            m_LateralSpeed = 5.3f;
+            m_ForwardSpeed = 5.3f;
+            //MARK: Original values
+            // m_LateralSpeed = 0.3f;
+            // m_ForwardSpeed = 1.3f;
         }
         else
         {
-            m_LateralSpeed = 0.3f;
-            m_ForwardSpeed = 1.0f;
+            m_LateralSpeed = 5.3f;
+            m_ForwardSpeed = 5.0f;
+            //MARK: Original values
+            // m_LateralSpeed = 0.3f;
+            // m_ForwardSpeed = 1.0f;
         }
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
         agentRb = GetComponent<Rigidbody>();

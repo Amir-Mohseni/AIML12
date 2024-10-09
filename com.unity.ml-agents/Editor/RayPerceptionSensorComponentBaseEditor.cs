@@ -38,7 +38,8 @@ namespace Unity.MLAgents.Editor
             // * The number of tags and rays affects the size of the observations.
             EditorGUI.BeginDisabledGroup(!EditorUtilities.CanUpdateModelProperties());
             {
-                EditorGUILayout.PropertyField(so.FindProperty("m_SensorName"), true);
+                //EditorGUILayout.PropertyField(so.FindProperty("m_SensorName"), true);
+                EditorGUILayout.PropertyField(so.FindProperty("m_SensorName"), false);
                 EditorGUILayout.PropertyField(so.FindProperty("m_DetectableTags"), true);
                 EditorGUILayout.PropertyField(so.FindProperty("m_RaysPerDirection"), true);
             }
