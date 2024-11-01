@@ -40,6 +40,8 @@ public class SoccerEnvController : MonoBehaviour
     public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
 
     private SoccerSettings m_SoccerSettings;
+    //private bool ballTouchedBlue = false;
+    //private bool ballTouchedPurple = false;
 
 
     private SimpleMultiAgentGroup m_BlueAgentGroup;
@@ -78,11 +80,31 @@ public class SoccerEnvController : MonoBehaviour
         m_ResetTimer += 1;
         if (m_ResetTimer >= MaxEnvironmentSteps && MaxEnvironmentSteps > 0)
         {
+            //addBallRewards();
             m_BlueAgentGroup.GroupEpisodeInterrupted();
             m_PurpleAgentGroup.GroupEpisodeInterrupted();
             ResetScene();
         }
     }
+
+    //private void addBallRewards()
+    //{
+    //    if (ballTouchedBlue == false and ballTouchedPurple == false)
+    //    {
+    //        m_BlueAgentGroup.AddGroupReward(-1f);
+    //        m_PurpleAgentGroup.AddGroupReward(-1f);
+    //    }
+    //    else if (ballTouchedPurple == false)
+    //    {
+    //        m_BlueAgentGroup.AddGroupReward(-1.5f);
+    //    }
+    //    else
+    //    {
+    //        m_PurpleAgentGroup.AddGroupReward(-1.5f);
+    //    }
+    //    ballTouchedBlue = false;
+    //    ballTouchedPurple = false;
+    //}
 
 
     public void ResetBall()

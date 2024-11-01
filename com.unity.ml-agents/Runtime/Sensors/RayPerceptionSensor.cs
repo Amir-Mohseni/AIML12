@@ -524,6 +524,7 @@ namespace Unity.MLAgents.Sensors
                             if (!string.IsNullOrEmpty(tag))
                             {
                                 tagsEqual = hitObject.CompareTag(tag);
+                                // Debug.Log($"hit object: {tag}");
                             }
                         }
                         catch (UnityException)

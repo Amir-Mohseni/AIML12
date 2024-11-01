@@ -130,10 +130,10 @@ public class AgentSoccer : Agent
         switch (rotateAxis)
         {
             case 1:
-                rotateDir = transform.up * -1f;
+                rotateDir = Vector3.up * -1f;
                 break;
             case 2:
-                rotateDir = transform.up * 1f;
+                rotateDir = Vector3.up * 1f;
                 break;
         }
 
@@ -207,10 +207,10 @@ public class AgentSoccer : Agent
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
         }
-        if (c.gameObject.CompareTag("wall"))
-        {
-            AddReward(-0.1f);
-        }
+        //if (c.gameObject.CompareTag("wall"))
+        //{
+        //    AddReward(-0.1f);
+        //}
     }
 
     public override void OnEpisodeBegin()
