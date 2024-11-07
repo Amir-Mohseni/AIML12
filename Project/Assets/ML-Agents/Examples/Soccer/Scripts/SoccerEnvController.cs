@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
+//using static System;
 
 public class SoccerEnvController : MonoBehaviour
 {
@@ -123,17 +124,35 @@ public class SoccerEnvController : MonoBehaviour
         if (scoredTeam == Team.Blue)
         {
             m_BlueAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
+            //Debug.Log(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
             m_PurpleAgentGroup.AddGroupReward(-1);
         }
         else
         {
             m_PurpleAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
+            //Debug.Log(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
             m_BlueAgentGroup.AddGroupReward(-1);
         }
         m_PurpleAgentGroup.EndGroupEpisode();
         m_BlueAgentGroup.EndGroupEpisode();
         ResetScene();
 
+    }
+
+    public void AgentTouchedBall(Team team)
+    {
+        if (team == Team.Blue)
+        {
+            //Debug.Log("befor: "+(float)m_ResetTimer / MaxEnvironmentSteps);
+            //Debug.Log((float)System.Math.Pow((1 - (float)m_ResetTimer / MaxEnvironmentSteps), 2));
+            //Debug.Log("after: " + (float)System.Math.Pow((1 - (float)m_ResetTimer / MaxEnvironmentSteps), 2));
+           // m_BlueAgentGroup.AddGroupReward((float)System.Math.Min((float)m_ResetTimer / MaxEnvironmentSteps,0.2));
+        }
+        else
+        {
+            //Debug.Log((float)System.Math.Pow((1 - (float)m_ResetTimer / MaxEnvironmentSteps), 2));
+           // m_PurpleAgentGroup.AddGroupReward((float)System.Math.Min((float)m_ResetTimer / MaxEnvironmentSteps, 0.2));
+        }
     }
 
 

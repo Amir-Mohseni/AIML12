@@ -3103,6 +3103,8 @@ MonoBehaviour:
   envController: {fileID: 0}
   purpleGoalTag: purpleGoal
   blueGoalTag: blueGoal
+  blueAgentTag: purpleAgent
+  purpleAgentTag: blueAgent
 --- !u!54 &54100138833592438
 Rigidbody:
   m_ObjectHideFlags: 0

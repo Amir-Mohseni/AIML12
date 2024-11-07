@@ -2,6 +2,8 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
+using Unity.MLAgents.Sensors;
+
 
 public enum Team
 {
@@ -37,7 +39,7 @@ public class AgentSoccer : Agent
     float m_Existential;
     float m_LateralSpeed;
     float m_ForwardSpeed;
-
+    private RayPerceptionSensorComponent3D raySensor;
 
     [HideInInspector]
     public Rigidbody agentRb;
@@ -61,6 +63,8 @@ public class AgentSoccer : Agent
         }
 
         m_BehaviorParameters = gameObject.GetComponent<BehaviorParameters>();
+        raySensor = gameObject.GetComponent<RayPerceptionSensorComponent3D>();
+
         if (m_BehaviorParameters.TeamId == (int)Team.Blue)
         {
             team = Team.Blue;
@@ -94,10 +98,10 @@ public class AgentSoccer : Agent
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
     }
-
     public void MoveAgent(ActionSegment<int> act)
     {
-        var dirToGo = Vector3.zero;
+        var forwardMove = Vector3.zero;
+        var sideMove = Vector3.zero;
         var rotateDir = Vector3.zero;
 
         m_KickPower = 0f;
@@ -109,38 +113,86 @@ public class AgentSoccer : Agent
         switch (forwardAxis)
         {
             case 1:
-                dirToGo = transform.forward * m_ForwardSpeed;
+                forwardMove = transform.forward * m_ForwardSpeed;
                 m_KickPower = 1f;
                 break;
             case 2:
-                dirToGo = transform.forward * -m_ForwardSpeed;
+                forwardMove = transform.forward * -m_ForwardSpeed;
                 break;
         }
 
         switch (rightAxis)
         {
             case 1:
-                dirToGo = transform.right * m_LateralSpeed;
+                sideMove = transform.right * m_LateralSpeed;
                 break;
             case 2:
-                dirToGo = transform.right * -m_LateralSpeed;
+                sideMove = transform.right * -m_LateralSpeed;
                 break;
         }
 
         switch (rotateAxis)
         {
             case 1:
-                rotateDir = Vector3.up * -1f;
+                rotateDir = transform.up * -1f;
                 break;
             case 2:
-                rotateDir = Vector3.up * 1f;
+                rotateDir = transform.up * 1f;
                 break;
         }
 
         transform.Rotate(rotateDir, Time.deltaTime * 100f);
-        agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
+        agentRb.AddForce(forwardMove * m_SoccerSettings.agentRunSpeed,
+            ForceMode.VelocityChange);
+        agentRb.AddForce(sideMove * m_SoccerSettings.agentRunSpeed,
             ForceMode.VelocityChange);
     }
+    //public void MoveAgent(ActionSegment<int> act)
+    //{
+    //    var dirToGo = Vector3.zero;
+    //    var rotateDir = Vector3.zero;
+
+    //    m_KickPower = 0f;
+
+    //    var forwardAxis = act[0];
+    //    var rightAxis = act[1];
+    //    var rotateAxis = act[2];
+
+    //    switch (forwardAxis)
+    //    {
+    //        case 1:
+    //            dirToGo = transform.forward * m_ForwardSpeed;
+    //            m_KickPower = 1f;
+    //            break;
+    //        case 2:
+    //            dirToGo = transform.forward * -m_ForwardSpeed;
+    //            break;
+    //    }
+
+    //    switch (rightAxis)
+    //    {
+    //        case 1:
+    //            dirToGo = transform.right * m_LateralSpeed;
+    //            break;
+    //        case 2:
+    //            dirToGo = transform.right * -m_LateralSpeed;
+    //            break;
+    //    }
+
+    //    switch (rotateAxis)
+    //    {
+    //        case 1:
+    //            rotateDir = Vector3.up * -1f;
+    //            break;
+    //        case 2:
+    //            rotateDir = Vector3.up * 1f;
+    //            break;
+    //    }
+
+    //    transform.Rotate(rotateDir, Time.deltaTime * 100f);
+    //    agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
+    //        ForceMode.VelocityChange);
+    //}
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
 
@@ -195,21 +247,27 @@ public class AgentSoccer : Agent
     /// </summary>
     void OnCollisionEnter(Collision c)
     {
+        //Debug.Log(c.gameObject.tag);
         var force = k_Power * m_KickPower;
         if (position == Position.Goalie)
         {
             force = k_Power;
         }
-        if (c.gameObject.CompareTag("ball"))
+        if (c.gameObject.tag == "ball")
         {
-            AddReward(.2f * m_BallTouch);
+            //AddReward(.2f * m_BallTouch);
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
+            Debug.Log("touched ball");
         }
         //if (c.gameObject.CompareTag("wall"))
         //{
         //    AddReward(-0.1f);
+        //}
+        //if (c.gameObject.CompareTag("ball"))
+        //{
+
         //}
     }
 

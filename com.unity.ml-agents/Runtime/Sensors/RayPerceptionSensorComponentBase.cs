@@ -390,9 +390,22 @@ namespace Unity.MLAgents.Sensors
             // Draw the hit point as a sphere. If using rays to cast (0 radius), use a small sphere.
             if (rayOutput.HasHit)
             {
+                //if (rayOutput.HitTaggedObject ==true)  // Assuming rayOutput.HitCollider gives the collider of the hit object
+                //{
+                //    Debug.Log("Hit object with tag: " + rayOutput.HitGameObject.tag);
+                //}
+                //else
+                //{
+                //    Debug.LogWarning("Hit detected, but no collider information available. " + rayOutput.HitGameObject.tag+" end");
+                //}
                 var hitRadius = Mathf.Max(rayOutput.ScaledCastRadius, .05f);
                 Gizmos.DrawWireSphere(startPositionWorld + rayDirection, hitRadius);
             }
+            //else
+            //{
+            //    Debug.LogWarning("no hit detected, but no collider information available. " );
+
+            //}
         }
     }
 }

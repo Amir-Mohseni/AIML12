@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\config",
+    "\\config\\poca",
+    "\\Project",
+    "\\Project\\config"
   ],
-  "SelectedNode": "\\com.unity.ml-agents\\Runtime\\Sensors\\RayPerceptionSensorComponentBase.cs",
+  "SelectedNode": "\\Project\\config\\config.yaml",
   "PreviewInSolutionExplorer": false
 }

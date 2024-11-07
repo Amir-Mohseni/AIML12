@@ -1,0 +1,66 @@
+{
+    "SoccerTwos": {
+        "checkpoints": [
+            {
+                "steps": 2999994,
+                "file_path": "results\\TestT81\\SoccerTwos\\SoccerTwos-2999994.onnx",
+                "reward": 0.0,
+                "creation_time": 1730996411.7737598,
+                "auxillary_file_paths": [
+                    "results\\TestT81\\SoccerTwos\\SoccerTwos-2999994.pt"
+                ]
+            },
+            {
+                "steps": 3499956,
+                "file_path": "results\\TestT81\\SoccerTwos\\SoccerTwos-3499956.onnx",
+                "reward": 0.0,
+                "creation_time": 1730997484.0163572,
+                "auxillary_file_paths": [
+                    "results\\TestT81\\SoccerTwos\\SoccerTwos-3499956.pt"
+                ]
+            },
+            {
+                "steps": 3999955,
+                "file_path": "results\\TestT81\\SoccerTwos\\SoccerTwos-3999955.onnx",
+                "reward": 0.0,
+                "creation_time": 1730998538.7871227,
+                "auxillary_file_paths": [
+                    "results\\TestT81\\SoccerTwos\\SoccerTwos-3999955.pt"
+                ]
+            },
+            {
+                "steps": 4499970,
+                "file_path": "results\\TestT81\\SoccerTwos\\SoccerTwos-4499970.onnx",
+                "reward": 0.0,
+                "creation_time": 1730999682.142864,
+                "auxillary_file_paths": [
+                    "results\\TestT81\\SoccerTwos\\SoccerTwos-4499970.pt"
+                ]
+            },
+            {
+                "steps": 4796434,
+                "file_path": "results\\TestT81\\SoccerTwos\\SoccerTwos-4796434.onnx",
+                "reward": 0.0,
+                "creation_time": 1731000419.1060102,
+                "auxillary_file_paths": [
+                    "results\\TestT81\\SoccerTwos\\SoccerTwos-4796434.pt"
+                ]
+            }
+        ],
+        "elo": 1635.3994012760475,
+        "final_checkpoint": {
+            "steps": 4796434,
+            "file_path": "results\\TestT81\\SoccerTwos.onnx",
+            "reward": 0.0,
+            "creation_time": 1731000419.1060102,
+            "auxillary_file_paths": [
+                "results\\TestT81\\SoccerTwos\\SoccerTwos-4796434.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.4.1+cpu"
+    }
+}
