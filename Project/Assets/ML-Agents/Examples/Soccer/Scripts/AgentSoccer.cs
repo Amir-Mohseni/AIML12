@@ -3,6 +3,9 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
+using System;
+using System.Collections.Generic;
+
 
 
 public enum Team
@@ -47,6 +50,7 @@ public class AgentSoccer : Agent
     BehaviorParameters m_BehaviorParameters;
     public Vector3 initialPos;
     public float rotSign;
+    private List<GameObject> detectedObjects = new List<GameObject>();
 
     EnvironmentParameters m_ResetParams;
 
@@ -146,6 +150,16 @@ public class AgentSoccer : Agent
             ForceMode.VelocityChange);
         agentRb.AddForce(sideMove * m_SoccerSettings.agentRunSpeed,
             ForceMode.VelocityChange);
+        if(agentRb.velocity.magnitude > 0.2)
+        {
+            agentRb.gameObject.tag = "objectWithSound";
+           // Debug.Log("tag moving "+ agentRb.velocity.magnitude);
+        }
+        else
+        {
+            agentRb.gameObject.tag = "Untagged";
+         //   Debug.Log("tag not moving");
+        }
     }
     //public void MoveAgent(ActionSegment<int> act)
     //{
@@ -259,7 +273,7 @@ public class AgentSoccer : Agent
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
-            Debug.Log("touched ball");
+            //Debug.Log("touched ball");
         }
         //if (c.gameObject.CompareTag("wall"))
         //{
@@ -270,10 +284,93 @@ public class AgentSoccer : Agent
 
         //}
     }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag=="ball")
+        {
+            if (other.gameObject.GetComponent<Rigidbody>().velocity.magnitude > 0.2f)
+            {
+                addGameObject(other.gameObject);
+            }
+        }
+        if (other.CompareTag("objectWithSound"))
+        {
+            Debug.Log("Object with sound 'YourTag' is within the sphere collider.");
+            addGameObject(other.gameObject);
+        }
+    }
+
+
+
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("objectWithSound"))
+        {
+            if (other.gameObject == null)
+            {
+                Debug.LogError("Rigidbody component is not found on the agent!");
+            }
+            addGameObject(other.gameObject);
+        }
+    }
+
+    private void addGameObject(GameObject gameObject)
+    {
+        foreach (GameObject currentGameObject in detectedObjects)
+        {
+            if (currentGameObject == gameObject)
+            {
+                return;
+            }
+        }
+        detectedObjects.Add(gameObject);
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        removeRigidbody(other.gameObject);
+    }
+
+    private void removeRigidbody(GameObject gameObject)
+    {
+        foreach (GameObject currentGameObject in detectedObjects)
+        {
+            if (currentGameObject == gameObject)
+            {
+                detectedObjects.Remove(gameObject);
+                return;
+            }
+        }
+    }
 
     public override void OnEpisodeBegin()
     {
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
     }
 
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        if (sensor == null)
+        {
+            Debug.LogError("sensor is null");
+        }
+
+
+        // Add the number of detected objects as an observation
+        sensor.AddObservation(detectedObjects.Count);
+
+        // Optionally, add more detailed observations for each detected object (e.g., position, distance)
+        //Debug.Log("Number of detected objects: " + detectedObjects.Count);
+        foreach (GameObject gameObject in detectedObjects)
+        {
+            Rigidbody r = gameObject.GetComponent<Rigidbody>();
+            Vector3 currentVelocity = r.velocity;
+            Vector3 relativePosition = r.transform.position - transform.position;
+            Debug.Log("Observation - Relative Position of Object: " + relativePosition);
+            sensor.AddObservation(relativePosition);
+            sensor.AddObservation(Vector3.zero);
+        }
+        detectedObjects.Clear();
+    }
 }

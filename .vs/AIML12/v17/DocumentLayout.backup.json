@@ -7,8 +7,8 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Project\\Assets\\ML-Agents\\Examples\\Soccer\\Scripts\\AgentSoccer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Policies\\BehaviorParameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:com.unity.ml-agents\\Runtime\\Policies\\BehaviorParameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Sensors\\RayPerceptionSensorComponent3D.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:com.unity.ml-agents\\Runtime\\Sensors\\RayPerceptionSensorComponent3D.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\Project\\Assets\\ML-Agents\\Examples\\Soccer\\Scripts\\SoccerEnvController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,22 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\Project\\Assets\\ML-Agents\\Examples\\Soccer\\Scripts\\SoccerBallController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Project\\Assets\\ML-Agents\\Examples\\Soccer\\Scripts\\SoccerBallController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\Project\\config\\config.yaml||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Project\\config\\config.yaml||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\config\\poca\\SoccerTwos.yaml||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:config\\poca\\SoccerTwos.yaml||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Policies\\BrainParameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:com.unity.ml-agents\\Runtime\\Policies\\BrainParameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Grpc\\CommunicatorObjects\\BrainParameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:com.unity.ml-agents\\Runtime\\Grpc\\CommunicatorObjects\\BrainParameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,72 +26,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BrainParameters.cs",
-              "DocumentMoniker": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Policies\\BrainParameters.cs",
-              "RelativeDocumentMoniker": "com.unity.ml-agents\\Runtime\\Policies\\BrainParameters.cs",
-              "ToolTip": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Policies\\BrainParameters.cs",
-              "RelativeToolTip": "com.unity.ml-agents\\Runtime\\Policies\\BrainParameters.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAADgv3IAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T13:19:06.619Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "BrainParameters.cs",
-              "DocumentMoniker": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Grpc\\CommunicatorObjects\\BrainParameters.cs",
-              "RelativeDocumentMoniker": "com.unity.ml-agents\\Runtime\\Grpc\\CommunicatorObjects\\BrainParameters.cs",
-              "ToolTip": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Grpc\\CommunicatorObjects\\BrainParameters.cs",
-              "RelativeToolTip": "com.unity.ml-agents\\Runtime\\Grpc\\CommunicatorObjects\\BrainParameters.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T13:19:03.71Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "BehaviorParameters.cs",
-              "DocumentMoniker": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Policies\\BehaviorParameters.cs",
-              "RelativeDocumentMoniker": "com.unity.ml-agents\\Runtime\\Policies\\BehaviorParameters.cs",
-              "ToolTip": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Policies\\BehaviorParameters.cs",
-              "RelativeToolTip": "com.unity.ml-agents\\Runtime\\Policies\\BehaviorParameters.cs",
-              "ViewState": "AgIAAJ8AAAAAAAAAAAAAAKEAAAAQAAAAAAAAAA==",
+              "Title": "RayPerceptionSensorComponent3D.cs",
+              "DocumentMoniker": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Sensors\\RayPerceptionSensorComponent3D.cs",
+              "RelativeDocumentMoniker": "com.unity.ml-agents\\Runtime\\Sensors\\RayPerceptionSensorComponent3D.cs",
+              "ToolTip": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\com.unity.ml-agents\\Runtime\\Sensors\\RayPerceptionSensorComponent3D.cs",
+              "RelativeToolTip": "com.unity.ml-agents\\Runtime\\Sensors\\RayPerceptionSensorComponent3D.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T13:17:30.054Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SoccerTwos.yaml",
-              "DocumentMoniker": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\config\\poca\\SoccerTwos.yaml",
-              "RelativeDocumentMoniker": "config\\poca\\SoccerTwos.yaml",
-              "ToolTip": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\config\\poca\\SoccerTwos.yaml",
-              "RelativeToolTip": "config\\poca\\SoccerTwos.yaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
-              "WhenOpened": "2024-11-07T09:28:30.002Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "config.yaml",
-              "DocumentMoniker": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\Project\\config\\config.yaml",
-              "RelativeDocumentMoniker": "Project\\config\\config.yaml",
-              "ToolTip": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\Project\\config\\config.yaml",
-              "RelativeToolTip": "Project\\config\\config.yaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
-              "WhenOpened": "2024-11-01T13:43:55.124Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-14T09:21:38.727Z"
             },
             {
               "$type": "Document",
@@ -117,7 +48,7 @@
               "RelativeDocumentMoniker": "Project\\Assets\\ML-Agents\\Examples\\Soccer\\Scripts\\AgentSoccer.cs",
               "ToolTip": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\Project\\Assets\\ML-Agents\\Examples\\Soccer\\Scripts\\AgentSoccer.cs",
               "RelativeToolTip": "Project\\Assets\\ML-Agents\\Examples\\Soccer\\Scripts\\AgentSoccer.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAIBAAAAAAAAAAAAACMBAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-31T14:05:09.217Z",
               "EditorCaption": ""
@@ -132,8 +63,7 @@
               "RelativeToolTip": "Project\\Assets\\ML-Agents\\Examples\\Soccer\\Scripts\\SoccerBallController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-04T11:23:09.317Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-04T11:23:09.317Z"
             },
             {
               "$type": "Document",
@@ -145,8 +75,7 @@
               "RelativeToolTip": "Project\\Assets\\ML-Agents\\Examples\\Soccer\\Scripts\\SoccerEnvController.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAAAAHkAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-28T10:22:10.418Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-28T10:22:10.418Z"
             }
           ]
         }
