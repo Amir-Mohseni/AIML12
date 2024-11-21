@@ -146,12 +146,12 @@ public class SoccerEnvController : MonoBehaviour
             //Debug.Log("befor: "+(float)m_ResetTimer / MaxEnvironmentSteps);
             //Debug.Log((float)System.Math.Pow((1 - (float)m_ResetTimer / MaxEnvironmentSteps), 2));
             //Debug.Log("after: " + (float)System.Math.Pow((1 - (float)m_ResetTimer / MaxEnvironmentSteps), 2));
-           // m_BlueAgentGroup.AddGroupReward((float)System.Math.Min((float)m_ResetTimer / MaxEnvironmentSteps,0.2));
+            // m_BlueAgentGroup.AddGroupReward((float)System.Math.Min((float)m_ResetTimer / MaxEnvironmentSteps,0.2));
         }
         else
         {
             //Debug.Log((float)System.Math.Pow((1 - (float)m_ResetTimer / MaxEnvironmentSteps), 2));
-           // m_PurpleAgentGroup.AddGroupReward((float)System.Math.Min((float)m_ResetTimer / MaxEnvironmentSteps, 0.2));
+            // m_PurpleAgentGroup.AddGroupReward((float)System.Math.Min((float)m_ResetTimer / MaxEnvironmentSteps, 0.2));
         }
     }
 

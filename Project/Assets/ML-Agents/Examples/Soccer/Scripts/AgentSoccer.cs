@@ -150,7 +150,7 @@ public class AgentSoccer : Agent
             ForceMode.VelocityChange);
         agentRb.AddForce(sideMove * m_SoccerSettings.agentRunSpeed,
             ForceMode.VelocityChange);
-        if(agentRb.velocity.magnitude > 0.2)
+        if(agentRb.velocity.magnitude > 0)
         {
             agentRb.gameObject.tag = "objectWithSound";
            // Debug.Log("tag moving "+ agentRb.velocity.magnitude);
@@ -275,10 +275,10 @@ public class AgentSoccer : Agent
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
             //Debug.Log("touched ball");
         }
-        //if (c.gameObject.CompareTag("wall"))
-        //{
-        //    AddReward(-0.1f);
-        //}
+        if (c.gameObject.CompareTag("wall"))
+        {
+            AddReward(-0.1f);
+        }
         //if (c.gameObject.CompareTag("ball"))
         //{
 
@@ -288,14 +288,14 @@ public class AgentSoccer : Agent
     {
         if (other.gameObject.tag=="ball")
         {
-            if (other.gameObject.GetComponent<Rigidbody>().velocity.magnitude > 0.2f)
+            if (other.gameObject.GetComponent<Rigidbody>().velocity.magnitude > 0)
             {
                 addGameObject(other.gameObject);
             }
         }
         if (other.CompareTag("objectWithSound"))
         {
-            Debug.Log("Object with sound 'YourTag' is within the sphere collider.");
+            //Debug.Log("Object with sound 'YourTag' is within the sphere collider.");
             addGameObject(other.gameObject);
         }
     }
@@ -309,7 +309,7 @@ public class AgentSoccer : Agent
         {
             if (other.gameObject == null)
             {
-                Debug.LogError("Rigidbody component is not found on the agent!");
+                //Debug.LogError("Rigidbody component is not found on the agent!");
             }
             addGameObject(other.gameObject);
         }
@@ -351,25 +351,54 @@ public class AgentSoccer : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        int vectorSize = 5;
         if (sensor == null)
         {
             Debug.LogError("sensor is null");
         }
-
+        if (detectedObjects.Count > vectorSize)
+        {
+            Debug.Log("count: " + detectedObjects.Count);
+        }
+        //Debug.Log("count: " + detectedObjects.Count);
 
         // Add the number of detected objects as an observation
-        sensor.AddObservation(detectedObjects.Count);
-
+        //sensor.AddObservation(detectedObjects.Count);
+        //List<Vector3> observations = new List<Vector3>();
         // Optionally, add more detailed observations for each detected object (e.g., position, distance)
         //Debug.Log("Number of detected objects: " + detectedObjects.Count);
+        Vector3[] observations = new Vector3[vectorSize];
+        int counter = 0;
         foreach (GameObject gameObject in detectedObjects)
         {
-            Rigidbody r = gameObject.GetComponent<Rigidbody>();
-            Vector3 currentVelocity = r.velocity;
-            Vector3 relativePosition = r.transform.position - transform.position;
-            Debug.Log("Observation - Relative Position of Object: " + relativePosition);
-            sensor.AddObservation(relativePosition);
-            sensor.AddObservation(Vector3.zero);
+            if (counter < vectorSize)
+            {
+                Rigidbody r = gameObject.GetComponent<Rigidbody>();
+                //Vector3 currentVelocity = r.velocity;
+                Vector3 relativePosition = transform.position - r.transform.position;
+                //Debug.Log("Observation - Relative Position of Object: " + relativePosition);
+                //sensor.AddObservation(relativePosition);
+                observations[counter] = relativePosition;
+                counter++;
+            }
+        }
+        if(counter < vectorSize)
+        {
+            for(int i = counter; i < vectorSize; i++)
+            {
+                //Debug.Log(observations[i]);
+                observations[i] = Vector3.zero;
+            }
+        }
+        int count = 0;
+       foreach(Vector3 vector in observations)
+        {
+            if (count < vectorSize)
+            {
+                //Debug.Log(vector);
+                sensor.AddObservation(vector);
+                count++;
+            }
         }
         detectedObjects.Clear();
     }
