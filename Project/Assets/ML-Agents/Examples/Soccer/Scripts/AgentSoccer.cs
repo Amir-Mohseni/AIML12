@@ -54,8 +54,13 @@ public class AgentSoccer : Agent
 
     EnvironmentParameters m_ResetParams;
 
+    private Queue<Vector3[]> soundMemory;
+    public int MEM_SIZE = 4;
+
     public override void Initialize()
     {
+        soundMemory = new Queue<Vector3[]>(MEM_SIZE);
+
         SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
         if (envController != null)
         {
@@ -390,14 +395,18 @@ public class AgentSoccer : Agent
                 observations[i] = Vector3.zero;
             }
         }
-        int count = 0;
-       foreach(Vector3 vector in observations)
+
+        if (soundMemory.Count == MEM_SIZE)
         {
-            if (count < vectorSize)
+            soundMemory.Dequeue();
+        }
+        soundMemory.Enqueue(observations);
+
+        foreach (Vector3[] frame in soundMemory)
+        {
+            foreach (Vector3 obs in frame)
             {
-                //Debug.Log(vector);
-                sensor.AddObservation(vector);
-                count++;
+                sensor.AddObservation(obs);
             }
         }
         detectedObjects.Clear();
