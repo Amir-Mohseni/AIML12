@@ -53,6 +53,7 @@ public class AgentSoccer : Agent
     private List<GameObject> detectedObjects = new List<GameObject>();
 
     EnvironmentParameters m_ResetParams;
+    private SoccerEnvController envController;
 
     private Queue<Vector3[]> soundMemory;
     private int MEM_SIZE = 4;
@@ -71,7 +72,7 @@ public class AgentSoccer : Agent
             soundMemory.Enqueue(temp);
         }
 
-        SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
+        envController = GetComponentInParent<SoccerEnvController>();
         if (envController != null)
         {
             m_Existential = 1f / envController.MaxEnvironmentSteps;
@@ -339,7 +340,11 @@ public class AgentSoccer : Agent
                 return;
             }
         }
-        detectedObjects.Add(gameObject);
+
+        if (SoccerEnvController.objectList.Contains(gameObject))
+        {
+            detectedObjects.Add(gameObject);
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -370,10 +375,16 @@ public class AgentSoccer : Agent
         {
             Debug.LogError("sensor is null");
         }
-        if (detectedObjects.Count > vectorSize)
+        if (detectedObjects.Count == 4)
         {
             Debug.Log("count: " + detectedObjects.Count);
+            foreach (var go in detectedObjects)
+            {
+                Debug.Log(go.name);
+            }
+            Debug.Log("Curr obj name: " + gameObject.name );
         }
+
         //Debug.Log("count: " + detectedObjects.Count);
 
         // Add the number of detected objects as an observation
@@ -416,7 +427,6 @@ public class AgentSoccer : Agent
                 sensor.AddObservation(obs);
             }
         }
-        Debug.Log(soundMemory.Count());
         detectedObjects.Clear();
     }
 }

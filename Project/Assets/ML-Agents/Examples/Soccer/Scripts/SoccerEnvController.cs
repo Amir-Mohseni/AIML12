@@ -50,14 +50,17 @@ public class SoccerEnvController : MonoBehaviour
 
     private int m_ResetTimer;
 
+    public static MovingObjects objectList;
+
     void Start()
     {
-
+        objectList = new MovingObjects();
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
         ballRb = ball.GetComponent<Rigidbody>();
+        objectList.AddGameObject(ball);
         m_BallStartingPos = new Vector3(ball.transform.position.x, ball.transform.position.y, ball.transform.position.z);
         foreach (var item in AgentsList)
         {
@@ -72,6 +75,7 @@ public class SoccerEnvController : MonoBehaviour
             {
                 m_PurpleAgentGroup.RegisterAgent(item.Agent);
             }
+            objectList.AddGameObject(item.Agent.gameObject);
         }
         ResetScene();
     }
