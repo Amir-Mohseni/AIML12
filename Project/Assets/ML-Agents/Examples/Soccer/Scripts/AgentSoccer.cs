@@ -5,7 +5,7 @@ using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 
 public enum Team
@@ -55,11 +55,21 @@ public class AgentSoccer : Agent
     EnvironmentParameters m_ResetParams;
 
     private Queue<Vector3[]> soundMemory;
-    public int MEM_SIZE = 4;
+    private int MEM_SIZE = 4;
+    private int vectorSize = 5;
 
     public override void Initialize()
     {
         soundMemory = new Queue<Vector3[]>(MEM_SIZE);
+        for (int i = 0; i < MEM_SIZE; i++)
+        {
+            Vector3[] temp = new Vector3[vectorSize];
+            for (int j = 0; j < vectorSize; j++)
+            {
+                temp[j] = Vector3.zero;
+            }
+            soundMemory.Enqueue(temp);
+        }
 
         SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
         if (envController != null)
@@ -356,7 +366,6 @@ public class AgentSoccer : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        int vectorSize = 5;
         if (sensor == null)
         {
             Debug.LogError("sensor is null");
@@ -396,10 +405,8 @@ public class AgentSoccer : Agent
             }
         }
 
-        if (soundMemory.Count == MEM_SIZE)
-        {
-            soundMemory.Dequeue();
-        }
+
+        soundMemory.Dequeue();
         soundMemory.Enqueue(observations);
 
         foreach (Vector3[] frame in soundMemory)
@@ -409,6 +416,7 @@ public class AgentSoccer : Agent
                 sensor.AddObservation(obs);
             }
         }
+        Debug.Log(soundMemory.Count());
         detectedObjects.Clear();
     }
 }
