@@ -1,13 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\ml-agents\\mlagents",
-    "\\ml-agents\\mlagents\\torch_utils",
     "\\Project",
-    "\\Project\\config",
-    "\\Project\\results\\TestT11\\run_logs",
-    "\\Project\\results\\TestT11\\SoccerTwos"
+    "\\Project\\config"
   ],
-  "SelectedNode": "\\Project\\results",
+  "SelectedNode": "\\ml-agents-envs",
   "PreviewInSolutionExplorer": false
 }

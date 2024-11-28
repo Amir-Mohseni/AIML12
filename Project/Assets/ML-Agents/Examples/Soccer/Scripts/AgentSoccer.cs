@@ -369,13 +369,32 @@ public class AgentSoccer : Agent
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
     }
 
+    private void ballFirst()
+    {
+        bool found = false;
+        foreach(GameObject currentGameObject in detectedObjects)
+        {
+            if(currentGameObject.tag=="ball")
+            {
+                detectedObjects.Remove(currentGameObject);
+                detectedObjects.Insert(0, currentGameObject);
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            detectedObjects.Insert(0, null);
+        }
+    }
+
     public override void CollectObservations(VectorSensor sensor)
     {
         if (sensor == null)
         {
             Debug.LogError("sensor is null");
         }
-        if (detectedObjects.Count == 4)
+        if (detectedObjects.Count > 4)
         {
             Debug.Log("count: " + detectedObjects.Count);
             foreach (var go in detectedObjects)
@@ -384,7 +403,7 @@ public class AgentSoccer : Agent
             }
             Debug.Log("Curr obj name: " + gameObject.name );
         }
-
+        ballFirst();
         //Debug.Log("count: " + detectedObjects.Count);
 
         // Add the number of detected objects as an observation
@@ -398,13 +417,21 @@ public class AgentSoccer : Agent
         {
             if (counter < vectorSize)
             {
-                Rigidbody r = gameObject.GetComponent<Rigidbody>();
-                //Vector3 currentVelocity = r.velocity;
-                Vector3 relativePosition = transform.position - r.transform.position;
-                //Debug.Log("Observation - Relative Position of Object: " + relativePosition);
-                //sensor.AddObservation(relativePosition);
-                observations[counter] = relativePosition;
-                counter++;
+                if (gameObject != null)
+                {
+                    Rigidbody r = gameObject.GetComponent<Rigidbody>();
+                    //Vector3 currentVelocity = r.velocity;
+                    Vector3 relativePosition = transform.position - r.transform.position;
+                    //Debug.Log("Observation - Relative Position of Object: " + relativePosition);
+                    //sensor.AddObservation(relativePosition);
+                    observations[counter] = relativePosition;
+                    counter++;
+                }
+                else
+                {
+                    observations[counter] = Vector3.zero;
+                    counter++;
+                }
             }
         }
         if(counter < vectorSize)
