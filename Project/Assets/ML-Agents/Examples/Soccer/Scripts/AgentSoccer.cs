@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 public enum Team
 {
     Blue = 0,
@@ -55,21 +54,27 @@ public class AgentSoccer : Agent
     EnvironmentParameters m_ResetParams;
     private SoccerEnvController envController;
 
-    private Queue<Vector3[]> soundMemory;
+    [Header("Sound Sensor Configuration")]
+    [Tooltip("Weight factor for velocity observations")]
+    [SerializeField] private float velocityWeight = 1.0f;
+
+    private Queue<(Vector3[] positions, Vector3[] velocities)> soundMemory;
     private int MEM_SIZE = 3;
     private int vectorSize = 4;
 
     public override void Initialize()
     {
-        soundMemory = new Queue<Vector3[]>(MEM_SIZE);
+        soundMemory = new Queue<(Vector3[] positions, Vector3[] velocities)>(MEM_SIZE);
         for (int i = 0; i < MEM_SIZE; i++)
         {
-            Vector3[] temp = new Vector3[vectorSize];
+            Vector3[] positions = new Vector3[vectorSize];
+            Vector3[] velocities = new Vector3[vectorSize];
             for (int j = 0; j < vectorSize; j++)
             {
-                temp[j] = Vector3.zero;
+                positions[j] = Vector3.zero;
+                velocities[j] = Vector3.zero;
             }
-            soundMemory.Enqueue(temp);
+            soundMemory.Enqueue((positions, velocities));
         }
 
         envController = GetComponentInParent<SoccerEnvController>();
@@ -177,53 +182,6 @@ public class AgentSoccer : Agent
          //   Debug.Log("tag not moving");
         }
     }
-    //public void MoveAgent(ActionSegment<int> act)
-    //{
-    //    var dirToGo = Vector3.zero;
-    //    var rotateDir = Vector3.zero;
-
-    //    m_KickPower = 0f;
-
-    //    var forwardAxis = act[0];
-    //    var rightAxis = act[1];
-    //    var rotateAxis = act[2];
-
-    //    switch (forwardAxis)
-    //    {
-    //        case 1:
-    //            dirToGo = transform.forward * m_ForwardSpeed;
-    //            m_KickPower = 1f;
-    //            break;
-    //        case 2:
-    //            dirToGo = transform.forward * -m_ForwardSpeed;
-    //            break;
-    //    }
-
-    //    switch (rightAxis)
-    //    {
-    //        case 1:
-    //            dirToGo = transform.right * m_LateralSpeed;
-    //            break;
-    //        case 2:
-    //            dirToGo = transform.right * -m_LateralSpeed;
-    //            break;
-    //    }
-
-    //    switch (rotateAxis)
-    //    {
-    //        case 1:
-    //            rotateDir = Vector3.up * -1f;
-    //            break;
-    //        case 2:
-    //            rotateDir = Vector3.up * 1f;
-    //            break;
-    //    }
-
-    //    transform.Rotate(rotateDir, Time.deltaTime * 100f);
-    //    agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
-    //        ForceMode.VelocityChange);
-    //}
-
     public override void OnActionReceived(ActionBuffers actionBuffers)
 
     {
@@ -285,7 +243,7 @@ public class AgentSoccer : Agent
         }
         if (c.gameObject.tag == "ball")
         {
-            //AddReward(.2f * m_BallTouch);
+            AddReward(.2f * m_BallTouch);
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
@@ -393,66 +351,60 @@ public class AgentSoccer : Agent
         if (sensor == null)
         {
             Debug.LogError("sensor is null");
+            return;
         }
-        if (detectedObjects.Count > 4)
-        {
-            Debug.Log("count: " + detectedObjects.Count);
-            foreach (var go in detectedObjects)
-            {
-                Debug.Log(go.name);
-            }
-            Debug.Log("Curr obj name: " + gameObject.name );
-        }
-        ballFirst();
-        //Debug.Log("count: " + detectedObjects.Count);
 
-        // Add the number of detected objects as an observation
-        //sensor.AddObservation(detectedObjects.Count);
-        //List<Vector3> observations = new List<Vector3>();
-        // Optionally, add more detailed observations for each detected object (e.g., position, distance)
-        //Debug.Log("Number of detected objects: " + detectedObjects.Count);
-        Vector3[] observations = new Vector3[vectorSize];
+        ballFirst();
+
+        Vector3[] positions = new Vector3[vectorSize];
+        Vector3[] velocities = new Vector3[vectorSize];
         int counter = 0;
+
         foreach (GameObject gameObject in detectedObjects)
         {
             if (counter < vectorSize)
             {
                 if (gameObject != null)
                 {
-                    Rigidbody r = gameObject.GetComponent<Rigidbody>();
-                    //Vector3 currentVelocity = r.velocity;
-                    Vector3 relativePosition = transform.position - r.transform.position;
-                    //Debug.Log("Observation - Relative Position of Object: " + relativePosition);
-                    //sensor.AddObservation(relativePosition);
-                    observations[counter] = relativePosition;
-                    counter++;
+                    Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        // Store both position and velocity information
+                        positions[counter] = transform.position - rb.transform.position;
+                        velocities[counter] = rb.velocity * velocityWeight;
+                    }
                 }
-                else
-                {
-                    observations[counter] = Vector3.zero;
-                    counter++;
-                }
-            }
-        }
-        if(counter < vectorSize)
-        {
-            for(int i = counter; i < vectorSize; i++)
-            {
-                //Debug.Log(observations[i]);
-                observations[i] = Vector3.zero;
+                counter++;
             }
         }
 
+        // Fill remaining slots with zero vectors
+        for (int i = counter; i < vectorSize; i++)
+        {
+            positions[i] = Vector3.zero;
+            velocities[i] = Vector3.zero;
+        }
+
+        // Update sound memory with both position and velocity
         soundMemory.Dequeue();
-        soundMemory.Enqueue(observations);
+        soundMemory.Enqueue((positions, velocities));
 
-        foreach (Vector3[] frame in soundMemory)
+        // Add all observations from sound memory
+        foreach (var frame in soundMemory)
         {
-            foreach (Vector3 obs in frame)
+            // Add position observations
+            foreach (Vector3 pos in frame.positions)
             {
-                sensor.AddObservation(obs);
+                sensor.AddObservation(pos);
+            }
+            
+            // Add velocity observations
+            foreach (Vector3 vel in frame.velocities)
+            {
+                sensor.AddObservation(vel);
             }
         }
+
         detectedObjects.Clear();
     }
 }
