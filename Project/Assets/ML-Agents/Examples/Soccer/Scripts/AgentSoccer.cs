@@ -56,8 +56,8 @@ public class AgentSoccer : Agent
     private SoccerEnvController envController;
 
     private Queue<Vector3[]> soundMemory;
-    private int MEM_SIZE = 4;
-    private int vectorSize = 5;
+    private int MEM_SIZE = 3;
+    private int vectorSize = 4;
 
     public override void Initialize()
     {
@@ -415,7 +415,6 @@ public class AgentSoccer : Agent
                 observations[i] = Vector3.zero;
             }
         }
-
 
         soundMemory.Dequeue();
         soundMemory.Enqueue(observations);
