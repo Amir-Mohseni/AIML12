@@ -183,19 +183,35 @@ public class AgentSoccer : Agent
         }
     }
     public override void OnActionReceived(ActionBuffers actionBuffers)
-
     {
+        // Add penalty for being in wrong goal area - only for goalies
+        if ((team == Team.Blue && position == Position.Goalie && transform.position.x < -15f) || // Purple goal is at negative X
+            (team == Team.Purple && position == Position.Goalie && transform.position.x > 15f))  // Blue goal is at positive X
+        {
+            AddReward(-0.005f); // Reduced penalty for being in opponent's goal
+        }
 
+        // Role-specific positioning rewards
         if (position == Position.Goalie)
         {
-            // Existential bonus for Goalies.
-            AddReward(m_Existential);
+            // Reward goalies for staying near their goal
+            float ownGoalX = (team == Team.Blue) ? 15f : -15f;
+            float distanceFromGoal = Mathf.Abs(transform.position.x - ownGoalX);
+            if (distanceFromGoal < 5f)  // If within reasonable range of goal
+            {
+                AddReward(0.001f);  // Small positive reward
+            }
         }
         else if (position == Position.Striker)
         {
-            // Existential penalty for Strikers
-            AddReward(-m_Existential);
+            // Small reward for strikers being in offensive half
+            float offensiveX = (team == Team.Blue) ? -transform.position.x : transform.position.x;
+            if (offensiveX > 0)
+            {
+                AddReward(0.001f);
+            }
         }
+
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
@@ -243,21 +259,39 @@ public class AgentSoccer : Agent
         }
         if (c.gameObject.tag == "ball")
         {
-            AddReward(.2f * m_BallTouch);
+            // Base ball touch reward
+            float touchReward = 0.5f * m_BallTouch;
+
+            // Add directional bonus for strikers
+            if (position == Position.Striker)
+            {
+                var ballRb = c.gameObject.GetComponent<Rigidbody>();
+                // Check if ball is being hit towards opponent's goal
+                float targetX = (team == Team.Blue) ? -15f : 15f;
+                float ballVelocityTowardsGoal = (team == Team.Blue) ? -ballRb.velocity.x : ballRb.velocity.x;
+                
+                if (ballVelocityTowardsGoal > 0)
+                {
+                    touchReward *= 1.5f; // 50% bonus for hitting ball towards goal
+                }
+            }
+            // Smaller reward for goalies touching ball
+            else if (position == Position.Goalie)
+            {
+                touchReward *= 0.5f;
+            }
+
+            AddReward(touchReward);
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
-            //Debug.Log("touched ball");
         }
         if (c.gameObject.CompareTag("wall"))
         {
             AddReward(-0.1f);
         }
-        //if (c.gameObject.CompareTag("ball"))
-        //{
-
-        //}
     }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag=="ball")
