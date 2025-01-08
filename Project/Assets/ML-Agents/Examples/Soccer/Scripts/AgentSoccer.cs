@@ -225,7 +225,6 @@ public class AgentSoccer : Agent
     //}
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
-
     {
 
         if (position == Position.Goalie)
@@ -306,6 +305,7 @@ public class AgentSoccer : Agent
         {
             if (other.gameObject.GetComponent<Rigidbody>().velocity.magnitude > 0)
             {
+                //Debug.Log("ball detected: OnTriggerEnter");
                 addGameObject(other.gameObject);
             }
         }
@@ -316,16 +316,13 @@ public class AgentSoccer : Agent
         }
     }
 
-
-
-
     void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("objectWithSound"))
+        if (other.CompareTag("objectWithSound") || other.CompareTag("ball"))
         {
             if (other.gameObject == null)
             {
-                //Debug.LogError("Rigidbody component is not found on the agent!");
+                Debug.LogError("Rigidbody component is not found on the agent!");
             }
             addGameObject(other.gameObject);
         }
@@ -333,17 +330,16 @@ public class AgentSoccer : Agent
 
     private void addGameObject(GameObject gameObject)
     {
-        foreach (GameObject currentGameObject in detectedObjects)
+        if (!detectedObjects.Contains(gameObject) && SoccerEnvController.objectList.Contains(gameObject))
         {
-            if (currentGameObject == gameObject)
+            if (gameObject.tag == "ball")
             {
-                return;
+                detectedObjects.Insert(0, gameObject);
             }
-        }
-
-        if (SoccerEnvController.objectList.Contains(gameObject))
-        {
-            detectedObjects.Add(gameObject);
+            else
+            {
+                detectedObjects.Add(gameObject);
+            }
         }
     }
 
@@ -375,17 +371,16 @@ public class AgentSoccer : Agent
         {
             Debug.LogError("sensor is null");
         }
-        if (detectedObjects.Count == 4)
+        if (detectedObjects.Count > 4)
         {
-            Debug.Log("count: " + detectedObjects.Count);
-            foreach (var go in detectedObjects)
-            {
-                Debug.Log(go.name);
-            }
-            Debug.Log("Curr obj name: " + gameObject.name );
+            //Debug.Log("count: " + detectedObjects.Count);
+            //foreach (var go in detectedObjects)
+            //{
+            //    Debug.Log(go.name);
+            //}
+            //Debug.Log("Curr obj name: " + gameObject.name );
+			Debug.Log("Err");
         }
-
-        //Debug.Log("count: " + detectedObjects.Count);
 
         // Add the number of detected objects as an observation
         //sensor.AddObservation(detectedObjects.Count);
@@ -394,6 +389,15 @@ public class AgentSoccer : Agent
         //Debug.Log("Number of detected objects: " + detectedObjects.Count);
         Vector3[] observations = new Vector3[vectorSize];
         int counter = 0;
+
+        // If ball is not detected, add Vector3.zero
+        if (detectedObjects.Count == 0 || !detectedObjects[0].CompareTag("ball"))
+        {
+            observations[0] = Vector3.zero;
+            //Debug.Log("ball not in detected objects");
+            counter = 1;
+        }
+
         foreach (GameObject gameObject in detectedObjects)
         {
             if (counter < vectorSize)
@@ -401,12 +405,12 @@ public class AgentSoccer : Agent
                 Rigidbody r = gameObject.GetComponent<Rigidbody>();
                 //Vector3 currentVelocity = r.velocity;
                 Vector3 relativePosition = transform.position - r.transform.position;
-                //Debug.Log("Observation - Relative Position of Object: " + relativePosition);
                 //sensor.AddObservation(relativePosition);
                 observations[counter] = relativePosition;
                 counter++;
             }
         }
+
         if(counter < vectorSize)
         {
             for(int i = counter; i < vectorSize; i++)
@@ -419,6 +423,7 @@ public class AgentSoccer : Agent
         soundMemory.Dequeue();
         soundMemory.Enqueue(observations);
 
+
         foreach (Vector3[] frame in soundMemory)
         {
             foreach (Vector3 obs in frame)
@@ -426,6 +431,24 @@ public class AgentSoccer : Agent
                 sensor.AddObservation(obs);
             }
         }
+
+        sensor.AddObservation(agentRb.transform.rotation.eulerAngles.y);
+
+        // USE TO DEBUG SOUND LOGIC
+        //
+        // if (detectedObjects.Count == 0) Debug.Log("No observations found: " + agentRb.name);
+        // else if (!detectedObjects[0].CompareTag("ball")) Debug.Log("Ball not found: " + agentRb.name);
+        // if (detectedObjects.Count > 0 && detectedObjects[0].CompareTag("ball"))
+        // {
+        //     Debug.Log("Detected observation 0: " + observations[0]);
+        //     Debug.Log("Detected observation 0 (name): " + detectedObjects[0].name);
+        //     Debug.Log("rot norm: " + agentRb.transform.rotation.eulerAngles.y);
+        //     Debug.Log("agent name: " + agentRb.name);
+        // }
+
+
+
         detectedObjects.Clear();
+
     }
 }

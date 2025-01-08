@@ -19,4 +19,10 @@ public class MovingObjects
     {
         return gameObjects.Contains(go);
     }
+
+    public GameObject GetFirstGameObject()
+    {
+        Debug.Log(gameObjects[0].tag);
+        return gameObjects[0];
+    }
 }
