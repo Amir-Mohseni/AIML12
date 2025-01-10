@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "Project\\Assets\\ML-Agents\\Examples\\SoccerDefault\\Scripts\\SoundController.cs",
               "ToolTip": "C:\\Users\\ronad\\Documents\\project2S1\\AIML12\\Project\\Assets\\ML-Agents\\Examples\\SoccerDefault\\Scripts\\SoundController.cs",
               "RelativeToolTip": "Project\\Assets\\ML-Agents\\Examples\\SoccerDefault\\Scripts\\SoundController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAADEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-07T17:38:30.279Z",
               "EditorCaption": ""
@@ -79,8 +79,7 @@
               "RelativeToolTip": "Project\\Assets\\ML-Agents\\Examples\\SoccerDefault\\Scripts\\AgentSoccer.cs",
               "ViewState": "AgIAAPcAAAAAAAAAAAAIwA4BAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T19:56:42.639Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-06T19:56:42.639Z"
             },
             {
               "$type": "Document",
@@ -92,8 +91,7 @@
               "RelativeToolTip": "Project\\Assets\\ML-Agents\\Examples\\SoccerDefault\\Scripts\\SensorsControllerForAgents.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-07T13:22:31.769Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-07T13:22:31.769Z"
             }
           ]
         }

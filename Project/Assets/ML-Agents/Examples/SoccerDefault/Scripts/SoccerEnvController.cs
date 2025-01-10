@@ -56,8 +56,8 @@ public class SoccerEnvController : MonoBehaviour
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
         ballRb = ball.GetComponent<Rigidbody>();
         m_BallStartingPos = new Vector3(ball.transform.position.x, ball.transform.position.y, ball.transform.position.z);
-        Debug.Log("blue: "+m_SoccerSettings.modelTypeBlueTeam);
-        Debug.Log("Purple: "+m_SoccerSettings.modelTypePurpleTeam);
+        //Debug.Log("blue: "+m_SoccerSettings.modelTypeBlueTeam);
+        //Debug.Log("Purple: "+m_SoccerSettings.modelTypePurpleTeam);
         foreach (var item in AgentsList)
         {
             item.StartingPos = item.Agent.transform.position;

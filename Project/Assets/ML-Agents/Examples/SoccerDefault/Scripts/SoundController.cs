@@ -109,6 +109,7 @@ public class SoundController
             Vector3 relativePosition = transform.position - rigidbody.transform.position;
             if (currentGameObject.tag == "ball")
             {
+                Debug.Log("Ball detected    "+transform.gameObject.name+" vecotr: "+relativePosition);
                 sawBall = true;
                 observations[ballLocationInObsList] = relativePosition;
                 continue;
@@ -123,6 +124,7 @@ public class SoundController
         }
         if (!sawBall)
         {
+            Debug.Log("nope    "+transform.gameObject.name);
             observations[ballLocationInObsList] = new Vector3(-100, -100, -100);
         }
         for (int i = counter; i < vectorSize; i++)

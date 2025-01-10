@@ -6,11 +6,6 @@ using System.Collections.Generic;
 
 public class SensorControllerForAgents
 {
-    //private string backCastName = "PurpuleReverseRays";
-    //private static string BlueReverseRays = "BlueReverseRays";
-    //private static string PurpleReverseRays = "PurpleReverseRays";
-    //private static string BlueReverseRays1 = "BlueReverseRays (1)";
-    //private static string PurpleReverseRays1 = "PurpleReverseRays (1)";
     private static List<string> rayNames = new List<string> { "BlueReverseRays" , "PurpleReverseRays" , "BlueReverseRays (1)", "PurpleReverseRays (1)" };
     
 /*
@@ -37,17 +32,23 @@ private static void ManageBackCast(AgentSoccer agent, bool setActive)
         //Debug.Log("OnlyForwardRaycast: " + agent.GetModelType());
         if (SoccerSettings.ModelType.OnlyForwardRaycast == agent.GetModelType())
         {
-            
             ManageBackCast(agent, false);
+            ManageSphereCollider(agent, false);
         }
         else if (SoccerSettings.ModelType.ForwardAndBackwardRaycast == agent.GetModelType())
         {
             ManageBackCast(agent, true);
+            ManageSphereCollider(agent, false);
         }
         else if (SoccerSettings.ModelType.SoundAndViewRotation == agent.GetModelType())
         {
             ManageBackCast(agent, false);
+            ManageSphereCollider(agent, true);
         }
+    }
+    public static void ManageSphereCollider(AgentSoccer agent, bool setActive)
+    {
+        agent.setSphereActive(setActive);
     }
 
 }
