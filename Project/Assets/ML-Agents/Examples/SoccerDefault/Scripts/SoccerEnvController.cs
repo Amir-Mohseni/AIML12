@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SoccerEnvController : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class SoccerEnvController : MonoBehaviour
         public Rigidbody Rb;
     }
 
+    private int gamesLimit = 1;
+    private PerformanceLog.Limit useLimit;
 
     /// <summary>
     /// Max Academy steps before this platform resets
@@ -49,8 +53,10 @@ public class SoccerEnvController : MonoBehaviour
 
     void Start()
     {
-
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
+
+        useLimit = PerformanceLog.Limit.False;
+
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
@@ -82,6 +88,7 @@ public class SoccerEnvController : MonoBehaviour
         m_ResetTimer += 1;
         if (m_ResetTimer >= MaxEnvironmentSteps && MaxEnvironmentSteps > 0)
         {
+            PerformanceLog.increaseGamesPlayed();
             m_BlueAgentGroup.GroupEpisodeInterrupted();
             m_PurpleAgentGroup.GroupEpisodeInterrupted();
             ResetScene();
@@ -106,11 +113,13 @@ public class SoccerEnvController : MonoBehaviour
         {
             m_BlueAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
             m_PurpleAgentGroup.AddGroupReward(-1);
+            PerformanceLog.increaseBlueWonCount();
         }
         else
         {
             m_PurpleAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
             m_BlueAgentGroup.AddGroupReward(-1);
+            PerformanceLog.increasePurpleWonCount();
         }
         m_PurpleAgentGroup.EndGroupEpisode();
         m_BlueAgentGroup.EndGroupEpisode();
@@ -134,6 +143,14 @@ public class SoccerEnvController : MonoBehaviour
 
             item.Rb.velocity = Vector3.zero;
             item.Rb.angularVelocity = Vector3.zero;
+        }
+
+        if (useLimit == PerformanceLog.Limit.True && PerformanceLog.getGamesPlayed() == gamesLimit)
+        {
+            Debug.LogError("GAMES PLAYED: " + PerformanceLog.getGamesPlayed());
+            Debug.LogError("BLUE WON: " + PerformanceLog.getBlueWonCount());
+            Debug.LogError("PURPLE WON: " + PerformanceLog.getPurpleWonCount());
+            Debug.LogError("TIE COUNT: " + (PerformanceLog.getGamesPlayed() - PerformanceLog.getBlueWonCount() - PerformanceLog.getPurpleWonCount()));
         }
 
         //Reset Ball

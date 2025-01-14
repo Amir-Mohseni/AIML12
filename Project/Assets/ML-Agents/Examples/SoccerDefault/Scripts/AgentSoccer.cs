@@ -256,7 +256,8 @@ public class AgentSoccer : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        
+        if(!this.sphereActive) return;
+
         Queue<Vector3[]> observations = soundController.GetObservations(transform);
 
         // if (this.gameObject.name == "BlueStriker")
@@ -264,9 +265,7 @@ public class AgentSoccer : Agent
         //     Debug.Log("-------------------------------------------------");
         //     Debug.Log(observations.Count);
         // }
-        if(!this.sphereActive){
-            return;
-        }
+
         sensor.AddObservation(agentRb.transform.rotation.eulerAngles.y);
         foreach (Vector3[] frame in observations)
         {
