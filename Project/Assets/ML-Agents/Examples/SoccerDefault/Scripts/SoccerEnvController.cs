@@ -18,7 +18,7 @@ public class SoccerEnvController : MonoBehaviour
         public Rigidbody Rb;
     }
 
-    private int gamesLimit = 1;
+    private int gamesLimit = 5;
     private PerformanceLog.Limit useLimit;
 
     /// <summary>
@@ -55,7 +55,7 @@ public class SoccerEnvController : MonoBehaviour
     {
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
 
-        useLimit = PerformanceLog.Limit.False;
+        useLimit = PerformanceLog.Limit.True;
 
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();

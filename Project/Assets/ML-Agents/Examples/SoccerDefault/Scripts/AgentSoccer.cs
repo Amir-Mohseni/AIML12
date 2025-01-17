@@ -47,7 +47,7 @@ public class AgentSoccer : Agent
     float m_Existential;
     float m_LateralSpeed;
     float m_ForwardSpeed;
-    //private static int counter = 0;
+    private static int counter = 0;
 
 
     [HideInInspector]
@@ -260,49 +260,49 @@ public class AgentSoccer : Agent
 
         Queue<Vector3[]> observations = soundController.GetObservations(transform);
 
-        // if (this.gameObject.name == "BlueStriker")
-        // {
-        //     Debug.Log("-------------------------------------------------");
-        //     Debug.Log(observations.Count);
-        // }
+        if (this.gameObject.name == "BlueStriker")
+        {
+            Debug.Log("-------------------------------------------------");
+            Debug.Log(observations.Count);
+        }
 
         sensor.AddObservation(agentRb.transform.rotation.eulerAngles.y);
         foreach (Vector3[] frame in observations)
         {
             foreach (Vector3 vector in frame)
             {
-                // if (this.gameObject.name == "BlueStriker")
-                // {
-                //     Debug.Log(vector);
-                // }
-                //Debug.Log(vector);
+                if (this.gameObject.name == "BlueStriker")
+                {
+                    Debug.Log(vector);
+                }
+                Debug.Log(vector);
                 sensor.AddObservation(vector);
             }
-            // if (this.gameObject.name == "BlueStriker")
-            // {
-            //     Debug.Log(counter);
-            //     Debug.Log("-------------------------------------------------");
-            // }
-            // if (detectedObjects.Count == 0) Debug.Log("No observations found: " + agentRb.name);
-        // else if (!detectedObjects[0].CompareTag("ball")) Debug.Log("Ball not found: " + agentRb.name);
-        // if (detectedObjects.Count > 0 && detectedObjects[0].CompareTag("ball"))
-        // {
-        //     Debug.Log("Detected observation 0: " + observations[0]);
-        //     Debug.Log("Detected observation 0 (name): " + detectedObjects[0].name);
-        //     Debug.Log("rot norm: " + agentRb.transform.rotation.eulerAngles.y);
-        //     Debug.Log("agent name: " + agentRb.name);
-        // }
+            if (this.gameObject.name == "BlueStriker")
+            {
+                Debug.Log(counter);
+                Debug.Log("-------------------------------------------------");
+            }
+            if (detectedObjects.Count == 0) Debug.Log("No observations found: " + agentRb.name);
+        else if (!detectedObjects[0].CompareTag("ball")) Debug.Log("Ball not found: " + agentRb.name);
+        if (detectedObjects.Count > 0 && detectedObjects[0].CompareTag("ball"))
+        {
+            Debug.Log("Detected observation 0: " + observations[0]);
+            Debug.Log("Detected observation 0 (name): " + detectedObjects[0].name);
+            Debug.Log("rot norm: " + agentRb.transform.rotation.eulerAngles.y);
+            Debug.Log("agent name: " + agentRb.name);
         }
-        // if (this.gameObject.name == "BlueStriker")
-        // {
-        //     if (counter == 5)
-        //     {
-        //         Debug.LogError("stop here");
-        //     }
-        //     counter++;
-        // }
-        // int totalObservations = sensor.ObservationSize(); // Check the size dynamically
-        // Debug.Log($"Total Observations: {totalObservations}");
+        }
+        if (this.gameObject.name == "BlueStriker")
+        {
+            if (counter == 5)
+            {
+                Debug.LogError("stop here");
+            }
+            counter++;
+        }
+        int totalObservations = sensor.ObservationSize(); // Check the size dynamically
+        Debug.Log($"Total Observations: {totalObservations}");
     }
 
     public void setSphereActive(bool active)

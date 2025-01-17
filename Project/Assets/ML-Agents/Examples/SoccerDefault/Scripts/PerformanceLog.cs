@@ -5,7 +5,7 @@
         True,
         False,
     }
-    public static Limit limit = Limit.False;
+    public static Limit limit = Limit.True;
 
     private static int blueWonCount = 0;
     private static int purpleWonCount = 0;
