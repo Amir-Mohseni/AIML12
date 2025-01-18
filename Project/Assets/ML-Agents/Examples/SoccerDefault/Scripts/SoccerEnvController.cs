@@ -65,12 +65,12 @@ public class SoccerEnvController : MonoBehaviour
             item.Rb = item.Agent.GetComponent<Rigidbody>();
             if (item.Agent.team == Team.Blue)
             {
-                item.Agent.setModelType(m_SoccerSettings.modelTypeBlueTeam);
+                //item.Agent.setModelType(m_SoccerSettings.modelTypeBlueTeam);
                 m_BlueAgentGroup.RegisterAgent(item.Agent);
             }
             else
             {
-                item.Agent.setModelType(m_SoccerSettings.modelTypePurpleTeam);
+                //item.Agent.setModelType(m_SoccerSettings.modelTypePurpleTeam);
                 m_PurpleAgentGroup.RegisterAgent(item.Agent);
             }
         }

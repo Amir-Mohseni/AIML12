@@ -57,12 +57,13 @@ public class AgentSoccer : Agent
     public Vector3 initialPos;
     public float rotSign;
     private SoundController soundController;
-    private bool sphereActive=false;
+    private bool sphereActive = false;
 
     EnvironmentParameters m_ResetParams;
 
     public override void Initialize()
     {
+        sphereActive = true;
         SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
         soundController = new SoundController();
         if (envController != null)
@@ -256,18 +257,14 @@ public class AgentSoccer : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        
-        Queue<Vector3[]> observations = soundController.GetObservations(transform);
 
+        Queue<Vector3[]> observations = soundController.GetObservations(transform);
+        sensor.AddObservation(agentRb.transform.rotation.eulerAngles.y);
         // if (this.gameObject.name == "BlueStriker")
         // {
-        //     Debug.Log("-------------------------------------------------");
-        //     Debug.Log(observations.Count);
+        //     Debug.Log("---------------------------------");
+        //     Debug.Log(observations.Count*(observations.Peek().Length));
         // }
-        if(!this.sphereActive){
-            return;
-        }
-        sensor.AddObservation(agentRb.transform.rotation.eulerAngles.y);
         foreach (Vector3[] frame in observations)
         {
             foreach (Vector3 vector in frame)
@@ -285,14 +282,14 @@ public class AgentSoccer : Agent
             //     Debug.Log("-------------------------------------------------");
             // }
             // if (detectedObjects.Count == 0) Debug.Log("No observations found: " + agentRb.name);
-        // else if (!detectedObjects[0].CompareTag("ball")) Debug.Log("Ball not found: " + agentRb.name);
-        // if (detectedObjects.Count > 0 && detectedObjects[0].CompareTag("ball"))
-        // {
-        //     Debug.Log("Detected observation 0: " + observations[0]);
-        //     Debug.Log("Detected observation 0 (name): " + detectedObjects[0].name);
-        //     Debug.Log("rot norm: " + agentRb.transform.rotation.eulerAngles.y);
-        //     Debug.Log("agent name: " + agentRb.name);
-        // }
+            // else if (!detectedObjects[0].CompareTag("ball")) Debug.Log("Ball not found: " + agentRb.name);
+            // if (detectedObjects.Count > 0 && detectedObjects[0].CompareTag("ball"))
+            // {
+            //     Debug.Log("Detected observation 0: " + observations[0]);
+            //     Debug.Log("Detected observation 0 (name): " + detectedObjects[0].name);
+            //     Debug.Log("rot norm: " + agentRb.transform.rotation.eulerAngles.y);
+            //     Debug.Log("agent name: " + agentRb.name);
+            // }
         }
         // if (this.gameObject.name == "BlueStriker")
         // {
