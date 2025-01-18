@@ -256,21 +256,19 @@ public class AgentSoccer : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        
-        Queue<Vector3[]> observations = soundController.GetObservations(transform);
-
-        // if (this.gameObject.name == "BlueStriker")
-        // {
-        //     Debug.Log("-------------------------------------------------");
-        //     Debug.Log(observations.Count);
-        // }
         if(!this.sphereActive){
             return;
         }
-        sensor.AddObservation(agentRb.transform.rotation.eulerAngles.y);
-        foreach (Vector3[] frame in observations)
+        Queue<float[]> observations = soundController.GetObservations(transform);
+        //  Debug.Log(agentRb.transform.rotation.eulerAngles.y/360f);
+        sensor.AddObservation(agentRb.transform.rotation.eulerAngles.y/360f);
+        // if (this.gameObject.name == "BlueStriker")
+        //         {
+        //             Debug.Log("---------------------------------");
+        //         }
+        foreach (float[] frame in observations)
         {
-            foreach (Vector3 vector in frame)
+            foreach (float vector in frame)
             {
                 // if (this.gameObject.name == "BlueStriker")
                 // {
@@ -294,6 +292,10 @@ public class AgentSoccer : Agent
         //     Debug.Log("agent name: " + agentRb.name);
         // }
         }
+        // if (this.gameObject.name == "BlueStriker")
+        //         {
+        //             Debug.Log("---------------------------------");
+        //         }
         // if (this.gameObject.name == "BlueStriker")
         // {
         //     if (counter == 5)

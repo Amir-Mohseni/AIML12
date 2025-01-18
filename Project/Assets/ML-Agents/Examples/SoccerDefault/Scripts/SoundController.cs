@@ -24,22 +24,22 @@ public class SoundController
     // index of the ball in the observation list.
     private static int ballLocationInObsList = 0;
 
-    private Queue<Vector3[]> soundMemory;
+    private Queue<float[]> soundMemory;
     // number of frames saved in the sound memory queue
-    private int MEM_SIZE = 3;
+    private int MEM_SIZE = 1;
     // number of observations in each frame
-    private int vectorSize = 4;
+    private int vectorSize = 12;
 
     public SoundController()
     {
         detectedGameObjects = new List<GameObject>();
-        soundMemory = new Queue<Vector3[]>(MEM_SIZE);
+        soundMemory = new Queue<float[]>(MEM_SIZE);
         for (int i = 0; i < MEM_SIZE; i++)
         {
-            Vector3[] temp = new Vector3[vectorSize];
+            float[] temp = new float[vectorSize];
             for (int j = 0; j < vectorSize; j++)
             {
-                temp[j] = new Vector3(-100, -100, -100);
+                temp[j] = 0f;
             }
             soundMemory.Enqueue(temp);
         }
@@ -75,10 +75,10 @@ public class SoundController
     /// </summary>
     /// <param name="transform"></param>
     /// <returns>Queue<Vector3[]> of the observations. </returns>
-    public Queue<Vector3[]> GetObservations(Transform transform)
+    public Queue<float[]> GetObservations(Transform transform)
     {
         soundMemory.Dequeue();
-        Vector3[] currentObservations = createObservations(transform);
+        float[] currentObservations = createObservations(transform);
         soundMemory.Enqueue(currentObservations);
         return soundMemory;
     }
@@ -92,43 +92,60 @@ public class SoundController
     /// </summary>
     /// <param name="transform"> the agent transform variable</param>
     /// <returns>array of vector3</returns>
-    private Vector3[] createObservations(Transform transform)
+    private float[] createObservations(Transform transform)
     {
         bool sawBall = false;
-        int counter = 1;
-        Vector3[] observations = new Vector3[vectorSize];
+        int counter = 3;
+        float[] observations = new float[vectorSize];
         foreach (GameObject currentGameObject in detectedGameObjects)
         {
             Rigidbody rigidbody = currentGameObject.GetComponent<Rigidbody>();
             if (!isObjectMoving(rigidbody))
             {
-                observations[counter] = new Vector3(-100, -100, -100);
-                counter++;
+                observations[counter] = 0f;
+                observations[counter + 1] = 0f;
+                observations[counter + 2] = 0f;
+                counter+=3;
                 continue;
             }
-            Vector3 relativePosition = transform.position - rigidbody.transform.position;
+            Vector3 relativePosition = (transform.position - rigidbody.transform.position).normalized;
             if (currentGameObject.tag == "ball")
             {
                 sawBall = true;
-                observations[ballLocationInObsList] = relativePosition;
+                // relativePosition= Vector3();
+                //Debug.Log("relative position: " + relativePosition);
+                observations[ballLocationInObsList] = relativePosition.x;
+                observations[ballLocationInObsList + 1] = relativePosition.z;
+                observations[ballLocationInObsList + 2] = Vector3.Distance(transform.position, rigidbody.transform.position);
                 continue;
             }
-            if (counter >= vectorSize)
+            if (counter > vectorSize)
             {
                 Debug.LogError("!!!ERROR, TOO MANY OBSERVATIONS!!!" + counter);
                 break;
             }
-            observations[counter] = relativePosition;
-            counter++;
+            //Debug.Log("relative position before: " + relativePosition);
+            // relativePosition=NormalizeVector(relativePosition);
+            //Debug.Log("relative position after: " + relativePosition);
+            // if(relativePosition.x>1 || relativePosition.z>1||relativePosition.x<0 || relativePosition.z<0){
+            //     Debug.LogError("!!!ERROR, relative position is out of bounds!!!" + relativePosition);
+            // }
+
+            observations[counter] = relativePosition.x;
+                observations[counter+1] = relativePosition.z;
+                observations[counter + 2] = Vector3.Distance(transform.position, rigidbody.transform.position);
+            counter+=3;
         }
         if (!sawBall)
         {
-            observations[ballLocationInObsList] = new Vector3(-100, -100, -100);
+            observations[ballLocationInObsList] = 0;
+                observations[ballLocationInObsList + 1] = 0;
+                observations[ballLocationInObsList + 2] = 0;
         }
         for (int i = counter; i < vectorSize; i++)
         {
             //Debug.Log(observations[i]);
-            observations[i] = new Vector3(-100, -100, -100);
+            observations[i] = 0;
         }
         return observations;
     }
@@ -146,4 +163,13 @@ public class SoundController
         }
         return true;
     }
+
+    // private Vector3 NormalizeVector(Vector3 vector)
+    // {
+    //     int minmax = 25;
+    //     vector.x = (vector.x + minmax) / (minmax*2);
+    //     //vector.y = (vector.y + 14) / 28;
+    //     vector.z = (vector.z + minmax) / (minmax*2);
+    //     return vector;
+    // }
 }

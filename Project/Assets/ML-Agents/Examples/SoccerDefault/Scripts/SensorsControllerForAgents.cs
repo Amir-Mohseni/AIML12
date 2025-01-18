@@ -11,13 +11,13 @@ public class SensorControllerForAgents
     //private static string PurpleReverseRays = "PurpleReverseRays";
     //private static string BlueReverseRays1 = "BlueReverseRays (1)";
     //private static string PurpleReverseRays1 = "PurpleReverseRays (1)";
-    private static List<string> rayNames = new List<string> { "BlueReverseRays" , "PurpleReverseRays" , "BlueReverseRays (1)", "PurpleReverseRays (1)" };
-    
-/*
- this function will diable the back cast raysof the agent.
-*/
-private static void ManageBackCast(AgentSoccer agent, bool setActive)
-{
+    private static List<string> rayNames = new List<string> { "BlueReverseRays", "PurpleReverseRays", "BlueReverseRays (1)", "PurpleReverseRays (1)" };
+
+    /*
+     this function will diable the back cast raysof the agent.
+    */
+    private static void ManageBackCast(AgentSoccer agent, bool setActive)
+    {
         Transform child = null;
         foreach (string currentRayName in rayNames)
         {
@@ -37,10 +37,12 @@ private static void ManageBackCast(AgentSoccer agent, bool setActive)
         //Debug.Log("OnlyForwardRaycast: " + agent.GetModelType());
         if (SoccerSettings.ModelType.OnlyForwardRaycast == agent.GetModelType())
         {
+            agent.setSphereActive(false);
             ManageBackCast(agent, false);
         }
         else if (SoccerSettings.ModelType.ForwardAndBackwardRaycast == agent.GetModelType())
         {
+            agent.setSphereActive(false);
             ManageBackCast(agent, true);
         }
         else if (SoccerSettings.ModelType.SoundAndViewRotation == agent.GetModelType())
