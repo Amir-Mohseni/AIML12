@@ -106,7 +106,7 @@ public class SoundController
                 counter++;
                 continue;
             }
-            Vector3 relativePosition = transform.position - rigidbody.transform.position;
+            Vector3 relativePosition = (transform.position - rigidbody.transform.position).normalized;
             if (currentGameObject.tag == "ball")
             {
                 sawBall = true;
