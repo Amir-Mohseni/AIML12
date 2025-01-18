@@ -39,7 +39,7 @@ public class SoundController
             Vector3[] temp = new Vector3[vectorSize];
             for (int j = 0; j < vectorSize; j++)
             {
-                temp[j] = new Vector3(-100, -100, -100);
+                temp[j] = Vector3.zero;
             }
             soundMemory.Enqueue(temp);
         }
@@ -102,11 +102,13 @@ public class SoundController
             Rigidbody rigidbody = currentGameObject.GetComponent<Rigidbody>();
             if (!isObjectMoving(rigidbody))
             {
-                observations[counter] = new Vector3(-100, -100, -100);
+                observations[counter] = Vector3.zero;
                 counter++;
                 continue;
             }
             Vector3 relativePosition = (transform.position - rigidbody.transform.position).normalized;
+            relativePosition.y=(transform.position - rigidbody.transform.position).magnitude;
+            Debug.Log("agent: "+transform.name+" relativePosition: "+relativePosition+" old: "+(transform.position - rigidbody.transform.position));
             if (currentGameObject.tag == "ball")
             {
                 sawBall = true;
@@ -123,12 +125,12 @@ public class SoundController
         }
         if (!sawBall)
         {
-            observations[ballLocationInObsList] = new Vector3(-100, -100, -100);
+            observations[ballLocationInObsList] = Vector3.zero;
         }
         for (int i = counter; i < vectorSize; i++)
         {
             //Debug.Log(observations[i]);
-            observations[i] = new Vector3(-100, -100, -100);
+            observations[i] = Vector3.zero;
         }
         return observations;
     }
