@@ -274,7 +274,9 @@ public class AgentSoccer : Agent
                 //     Debug.Log(vector);
                 // }
                 //Debug.Log(vector);
-                sensor.AddObservation(vector);
+                Vector3 normalized = vector.normalized;
+                normalized.y = vector.magnitude;
+                sensor.AddObservation(normalized);
             }
             // if (this.gameObject.name == "BlueStriker")
             // {
