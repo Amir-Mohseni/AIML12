@@ -108,7 +108,7 @@ public class SoundController
             }
             Vector3 relativePosition = (transform.position - rigidbody.transform.position).normalized;
             relativePosition.y=(transform.position - rigidbody.transform.position).magnitude;
-            Debug.Log("agent: "+transform.name+" relativePosition: "+relativePosition+" old: "+(transform.position - rigidbody.transform.position));
+            //Debug.Log("agent: "+transform.name+" relativePosition: "+relativePosition+" old: "+(transform.position - rigidbody.transform.position));
             if (currentGameObject.tag == "ball")
             {
                 sawBall = true;
