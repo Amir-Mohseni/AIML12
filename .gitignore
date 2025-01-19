@@ -8,6 +8,7 @@
 /Build_FBR
 /Build_SVR
 /Build_OF
+/Build_S
 
 # Training environments
 /envs
