@@ -236,18 +236,12 @@ public class AgentSoccer : Agent
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
         m_BallTouch = 0.1f;
     }
-    public void setModelType(SoccerSettings.ModelType modelType)
-    {
-        this.modelType = modelType;
-        SensorControllerForAgents.ManageAgentSensors(this);
-    }
-    public SoccerSettings.ModelType GetModelType()
-    {
-        return this.modelType;
-    }
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        if(!sphereActive){
+            return;
+        }
         List<Vector3> objects = sound.getObjects(agentRb);
         soundMemory.Dequeue();
         soundMemory.Enqueue(objects);
@@ -277,6 +271,16 @@ public class AgentSoccer : Agent
             soundMemory.Enqueue(sound.getObjects(agentRb));
 
         }
+    }
+
+    public void setModelType(SoccerSettings.ModelType modelType)
+    {
+        this.modelType = modelType;
+        SensorControllerForAgents.ManageAgentSensors(this);
+    }
+    public SoccerSettings.ModelType GetModelType()
+    {
+        return this.modelType;
     }
     public void setSphereActive(bool active)
     {
