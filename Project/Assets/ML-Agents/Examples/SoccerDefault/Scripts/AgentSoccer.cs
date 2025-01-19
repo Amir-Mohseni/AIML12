@@ -56,16 +56,18 @@ public class AgentSoccer : Agent
     BehaviorParameters m_BehaviorParameters;
     public Vector3 initialPos;
     public float rotSign;
-    private SoundController soundController;
     private bool sphereActive = false;
 
+    private Queue<List<Vector3>> soundMemory;
+    private int MEM_SIZE = 3;
     EnvironmentParameters m_ResetParams;
 
     public override void Initialize()
     {
         sphereActive = true;
+        soundMemory = new Queue<List<Vector3>>();
+
         SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
-        soundController = new SoundController();
         if (envController != null)
         {
             m_Existential = 1f / envController.MaxEnvironmentSteps;
@@ -243,36 +245,39 @@ public class AgentSoccer : Agent
     {
         return this.modelType;
     }
-    void OnTriggerEnter(Collider other)
-    {
-        soundController.AddToList(other.gameObject);
-    }
-    void OnTriggerStay(Collider other)
-    {
-        soundController.AddToList(other.gameObject);
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        soundController.RemoveFromList(other.gameObject);
-    }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-
-        Queue<Vector3[]> observations = soundController.GetObservations(transform);
-        sensor.AddObservation(agentRb.transform.rotation.eulerAngles.y);
-
-        foreach (Vector3[] frame in observations)
+        List<Vector3> objects = Sound.getObjects(agentRb);
+        soundMemory.Dequeue();
+        soundMemory.Enqueue(objects);
+        foreach (List<Vector3> frame in soundMemory)
         {
-            foreach (Vector3 vector in frame)
+            foreach (Vector3 t in frame)
             {
-
-                sensor.AddObservation(vector);
+                if(Vector3.zero == t)
+                {
+                    sensor.AddObservation(Vector3.zero);
+                    // Debug.Log(transform.name + " empty" );
+                    continue;
+                }
+                Vector3 relativePosition = (transform.position - t).normalized;
+                relativePosition.y = (transform.position - t).magnitude;
+                sensor.AddObservation(relativePosition);
+                // Debug.Log(transform.name + " " + relativePosition);
             }
         }
+
     }
 
+    public void initThing()
+    {
+        for (int i = 0; i < MEM_SIZE; i++)
+        {
+            soundMemory.Enqueue(Sound.getObjects(agentRb));
+
+        }
+    }
     public void setSphereActive(bool active)
     {
         this.sphereActive = active;
