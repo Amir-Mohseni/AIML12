@@ -223,8 +223,7 @@ public class AgentSoccer : Agent
         }
         if (c.gameObject.CompareTag("ball"))
         {
-            AddReward(.1f * m_BallTouch);
-            m_BallTouch /= 2f; //m_BallTouch follows geometric series, which means the total reward for a ball touch approaches 0.1
+            AddReward(.2f * m_BallTouch);
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
@@ -233,8 +232,7 @@ public class AgentSoccer : Agent
 
     public override void OnEpisodeBegin()
     {
-        //m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
-        m_BallTouch = .5f;
+        m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
     }
     public void setModelType(SoccerSettings.ModelType modelType)
     {
