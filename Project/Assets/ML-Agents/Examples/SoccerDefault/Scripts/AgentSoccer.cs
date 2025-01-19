@@ -114,7 +114,7 @@ public class AgentSoccer : Agent
         agentRb.maxAngularVelocity = 500;
         //SensorControllerForAgents.ManageAgentSensors(this);
         m_ResetParams = Academy.Instance.EnvironmentParameters;
-
+        m_BallTouch = 0.1f;
     }
 
     public void MoveAgent(ActionSegment<int> act)
@@ -234,6 +234,7 @@ public class AgentSoccer : Agent
     public override void OnEpisodeBegin()
     {
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
+        m_BallTouch = 0.1f;
     }
     public void setModelType(SoccerSettings.ModelType modelType)
     {
@@ -254,7 +255,7 @@ public class AgentSoccer : Agent
         {
             foreach (Vector3 t in frame)
             {
-                if(Vector3.zero == t)
+                if (Vector3.zero == t)
                 {
                     sensor.AddObservation(Vector3.zero);
                     // Debug.Log(transform.name + " empty" );
