@@ -47,6 +47,7 @@ public class AgentSoccer : Agent
     float m_Existential;
     float m_LateralSpeed;
     float m_ForwardSpeed;
+    private Sound sound;
     //private static int counter = 0;
 
 
@@ -246,7 +247,7 @@ public class AgentSoccer : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        List<Vector3> objects = Sound.getObjects(agentRb);
+        List<Vector3> objects = sound.getObjects(agentRb);
         soundMemory.Dequeue();
         soundMemory.Enqueue(objects);
         foreach (List<Vector3> frame in soundMemory)
@@ -272,7 +273,7 @@ public class AgentSoccer : Agent
     {
         for (int i = 0; i < MEM_SIZE; i++)
         {
-            soundMemory.Enqueue(Sound.getObjects(agentRb));
+            soundMemory.Enqueue(sound.getObjects(agentRb));
 
         }
     }
@@ -283,5 +284,10 @@ public class AgentSoccer : Agent
     public bool getSphereActive()
     {
         return this.sphereActive;
+    }
+
+    public void setSound(Sound sound)
+    {
+        this.sound = sound;
     }
 }
