@@ -5,6 +5,9 @@
 /results
 # Output Builds
 /Builds
+/Build_FBR
+/Build_SVR
+/Build_OF
 
 # Training environments
 /envs
@@ -98,3 +101,6 @@ coverage.xml
 
 # yamato-parser temporary output files:
 .yamato/unfolded/
+
+# training_scripts aside from the template_config.yaml
+training_scripts/*/
